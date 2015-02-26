@@ -2,6 +2,7 @@
 
 app = require('./app.coffee')
 driver = app.driver
+system_db = app.system_db
 topbar = require('./topbar.coffee')
 models = require('./models.coffee')
 router = require('./router.coffee')

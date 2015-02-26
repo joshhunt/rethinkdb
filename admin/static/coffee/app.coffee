@@ -1,9 +1,9 @@
 # Copyright 2010-2012 RethinkDB, all rights reserved.
 
-# The system database
-module.exports.system_db = 'rethinkdb'
-
 r = require('rethinkdb')
+main_view_mod = require('./body.coffee')
+data_explorer_view = require('./dataexplorer.coffee')
+system_db = 'rethinkdb'
 
 class @Driver
     constructor: (args) ->
@@ -88,7 +88,7 @@ class @Driver
                         if @state is 'ok'
                             window.is_disconnected.display_fail()
                     else
-                        window.is_disconnected = new IsDisconnected
+                        window.is_disconnected = new main_view_mod.IsDisconnected
                     @state = 'fail'
                 else
                     if @state is 'fail'
@@ -367,10 +367,7 @@ class @Driver
         num_sindexes_constructing: (jobs=driver.admin().jobs) ->
             jobs.count((job) -> job('type').eq('index_construction'))
 
-main_view = require('./body.coffee')
-data_explorer_view = require('./dataexplorer.coffee')
-
-main_view = new main_view.MainContainer()
+main_view = new main_view_mod.MainContainer()
 
 $ ->
     $('body').html(main_view.render().$el)
@@ -383,8 +380,12 @@ $ ->
     data_explorer_view.Container.prototype.set_docs reql_docs
 
 # Create a driver - providing sugar on top of the raw driver
-module.exports.driver = new Driver
+driver = new Driver
+module.exports.driver = driver
 # Some views backup their data here so that when you return to them
 # the latest data can be retrieved quickly.
 module.exports.view_data_backup = {}
 module.exports.main_view = main_view
+
+# The system database
+module.exports.system_db = system_db

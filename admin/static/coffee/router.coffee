@@ -1,7 +1,7 @@
 # Copyright 2010-2012 RethinkDB, all rights reserved.
 dashboard_view = require('./dashboard.coffee')
 tables_view = require('./tables/index.coffee')
-servers_view = require('./servers/servers.coffee')
+servers_view = require('./servers/index.coffee')
 log_view = require('./log_view.coffee')
 dataexplorer_view = require('./dataexplorer.coffee')
 table_view = require('./tables/table.coffee')
@@ -81,4 +81,5 @@ class BackboneCluster extends Backbone.Router
         @current_view = new server_view.ServerContainer id
         @container.html @current_view.render().$el
 
-module.exports.BackboneCluster = BackboneCluster
+module.exports =
+    BackboneCluster: BackboneCluster

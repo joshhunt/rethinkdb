@@ -2,6 +2,8 @@
 
 app = require('./app.coffee')
 driver = app.driver
+system_db = app.system_db
+main_view = app.main_view
 models = require('./models.coffee')
 log_view = require('./log_view.coffee')
 vis = require('./vis.coffee')
