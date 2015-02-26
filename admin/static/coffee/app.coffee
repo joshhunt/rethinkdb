@@ -1,30 +1,9 @@
 # Copyright 2010-2012 RethinkDB, all rights reserved.
 
 # The system database
-window.system_db = 'rethinkdb'
+module.exports.system_db = 'rethinkdb'
 
-$ ->
-    # Load the raw driver
-    window.r = require('rethinkdb')
-
-    # Create a driver - providing sugar on top of the raw driver
-    window.driver = new Driver
-
-    # Some views backup their data here so that when you return to them
-    # the latest data can be retrieved quickly.
-    window.view_data_backup = {}
-
-    window.main_view = new MainView.MainContainer()
-    $('body').html main_view.render().$el
-
-
-    # We need to start the router after the main view is bound to the DOM
-    main_view.start_router()
-
-    Backbone.sync = (method, model, success, error) ->
-        return 0
-
-    DataExplorerView.Container.prototype.set_docs reql_docs
+r = require('rethinkdb')
 
 class @Driver
     constructor: (args) ->
@@ -387,3 +366,25 @@ class @Driver
 
         num_sindexes_constructing: (jobs=driver.admin().jobs) ->
             jobs.count((job) -> job('type').eq('index_construction'))
+
+main_view = require('./body.coffee')
+data_explorer_view = require('./dataexplorer.coffee')
+
+main_view = new main_view.MainContainer()
+
+$ ->
+    $('body').html(main_view.render().$el)
+    # We need to start the router after the main view is bound to the DOM
+    main_view.start_router()
+
+    Backbone.sync = (method, model, success, error) ->
+        return 0
+
+    data_explorer_view.Container.prototype.set_docs reql_docs
+
+# Create a driver - providing sugar on top of the raw driver
+module.exports.driver = new Driver
+# Some views backup their data here so that when you return to them
+# the latest data can be retrieved quickly.
+module.exports.view_data_backup = {}
+module.exports.main_view = main_view
