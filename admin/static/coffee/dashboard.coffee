@@ -394,4 +394,5 @@ module.exports =
     DashboardMainView: DashboardMainView
     ClusterStatusAvailability: ClusterStatusAvailability
     ClusterStatusRedundancy: ClusterStatusRedundancy
+    ClusterStatusConnectivity: ClusterStatusConnectivity
     ClusterStatusSindexes: ClusterStatusSindexes

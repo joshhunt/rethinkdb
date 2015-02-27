@@ -4,7 +4,7 @@ app = require('./app.coffee')
 router = app.main_container.router
 system_db = app.system_db
 driver = app.driver
-utils = require('./utils.coffee')
+util = require('./util.coffee')
 
 r = require('rethinkdb')
 
@@ -1547,7 +1547,7 @@ class Container extends Backbone.View
     extract_data_from_query: (args) =>
         size_stack = args.size_stack
         query = args.query
-        context = if args.context? then model.DataUtils.deep_copy(args.context) else {}
+        context = if args.context? then util.deep_copy(args.context) else {}
         position = args.position
 
         stack = []
@@ -1615,7 +1615,7 @@ class Container extends Backbone.View
                             element.type = 'anonymous_function'
                             list_args = result_regex[2]?.split(',')
                             element.args = []
-                            new_context = utils.deep_copy context
+                            new_context = util.deep_copy context
                             for arg in list_args
                                 arg = arg.replace(/(^\s*)|(\s*$)/gi,"") # Removing leading/trailing spaces
                                 new_context[arg] = true
@@ -3202,7 +3202,7 @@ class TableView extends ResultView
                     is_primitive: true
             else
                 if keys_count['object'][key]['object']?
-                    new_prefix = utils.deep_copy(prefix)
+                    new_prefix = util.deep_copy(prefix)
                     new_prefix.push key
                     @get_all_attr
                         keys_count: keys_count.object[key]

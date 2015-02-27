@@ -1,11 +1,14 @@
 # Copyright 2010-2012 RethinkDB, all rights reserved.
 
-r = require('rethinkdb')
 body = require('./body.coffee')
 data_explorer_view = require('./dataexplorer.coffee')
 system_db = 'rethinkdb'
 
-class @Driver
+r = require('rethinkdb')
+
+is_disconnected = null
+
+class Driver
     constructor: (args) ->
         if window.location.port is ''
             if window.location.protocol is 'https:'
@@ -51,11 +54,11 @@ t
             if error?
                 # If we cannot open a connection, we blackout the whole interface
                 # And do not call the callback
-                if window.is_disconnected?
+                if is_disconnected?
                     if @state is 'ok'
-                        window.is_disconnected.display_fail()
+                        is_disconnected.display_fail()
                 else
-                    window.is_disconnected = new IsDisconnected
+                    is_disconnected = new body.IsDisconnected
                 @state = 'fail'
             else
                 if @state is 'fail'
@@ -84,11 +87,11 @@ t
                 if error?
                     # If we cannot open a connection, we blackout the whole interface
                     # And do not call the callback
-                    if window.is_disconnected?
+                    if is_disconnected?
                         if @state is 'ok'
-                            window.is_disconnected.display_fail()
+                            is_disconnected.display_fail()
                     else
-                        window.is_disconnected = new body.IsDisconnected
+                        is_disconnected = new body.IsDisconnected
                     @state = 'fail'
                 else
                     if @state is 'fail'

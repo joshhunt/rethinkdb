@@ -53,7 +53,7 @@ class Container extends Backbone.View
         @issues_banner.remove()
         super()
 
-# TopBar.ClientConnectionStatus
+
 class ClientConnectionStatus extends Backbone.View
     className: 'client-connection-status'
     template: Handlebars.templates['sidebar-client_connection_status-template']
@@ -71,7 +71,7 @@ class ClientConnectionStatus extends Backbone.View
         @stopListening()
         super()
 
-# TopBar.ServersConnected
+
 class ServersConnected extends Backbone.View
     template: Handlebars.templates['sidebar-servers_connected-template']
 
@@ -90,7 +90,7 @@ class ServersConnected extends Backbone.View
         @stopListening()
         super()
 
-# TopBar.DatacentersConnected
+
 class TablesAvailable extends Backbone.View
     template: Handlebars.templates['sidebar-tables_available-template']
 
@@ -110,7 +110,7 @@ class TablesAvailable extends Backbone.View
         @stopListening()
         super()
 
-# TopBar.Issues
+
 # Issue count panel at the top
 class Issues extends Backbone.View
     className: 'issues'
@@ -128,7 +128,7 @@ class Issues extends Backbone.View
         @stopListening()
         super()
 
-# TopBar.IssuesBanner
+
 class IssuesBanner extends Backbone.View
     template: Handlebars.templates['sidebar-issues_banner-template']
     resolve_issues_route: '#resolve_issues'
