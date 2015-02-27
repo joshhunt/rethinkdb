@@ -4,6 +4,7 @@ app = require('./app.coffee')
 driver = app.driver
 system_db = app.system_db
 topbar = require('./topbar.coffee')
+navbar = require('./navbar.coffee')
 models = require('./models.coffee')
 router = require('./router.coffee')
 
@@ -28,7 +29,7 @@ class MainContainer extends Backbone.View
             alert_update_view: @alert_update_view
         @options_state = 'hidden'
 
-        @navbar = new topbar.NavBarView
+        @navbar = new navbar.NavBarView
             databases: @databases
             tables: @tables
             servers: @servers

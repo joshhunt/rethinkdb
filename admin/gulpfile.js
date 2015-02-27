@@ -31,5 +31,5 @@ gulp.task('coffee', function() {
   return gulp.src(COFFEE_SRC)
     .pipe(coffee({bare: true}).on('error', gutil.log))
     .pipe(concat, parameters.app_main_file)
-    .pipe(gulp.dest(parameters.web_path+'/js'))
+    .pipe(gulp.dest())
 });

@@ -1,10 +1,10 @@
 # Copyright 2010-2012 RethinkDB, all rights reserved.
 dashboard_view = require('./dashboard.coffee')
-tables_view = require('./tables/index.coffee')
-servers_view = require('./servers/index.coffee')
 log_view = require('./log_view.coffee')
 dataexplorer_view = require('./dataexplorer.coffee')
+tables_view = require('./tables/index.coffee')
 table_view = require('./tables/table.coffee')
+servers_view = require('./servers/index.coffee')
 server_view = require('./servers/server.coffee')
 app = require('./app.coffee')
 
