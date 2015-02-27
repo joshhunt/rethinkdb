@@ -3,7 +3,7 @@
 app = require('./app.coffee')
 driver = app.driver
 system_db = app.system_db
-main_view = app.main_view
+main_container = app.main_container
 models = require('./models.coffee')
 log_view = require('./log_view.coffee')
 vis = require('./vis.coffee')
@@ -140,7 +140,7 @@ class DashboardMainView extends Backbone.View
 
 
     show_all_logs: ->
-        main_view.router.navigate '#logs',
+        main_container.router.navigate '#logs',
             trigger: true
 
     render: =>

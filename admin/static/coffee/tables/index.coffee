@@ -60,12 +60,12 @@ class DatabasesContainer extends Backbone.View
             @$('.remove-tables').prop 'disabled', true
 
     initialize: =>
-        if not window.view_data_backup.tables_view_databases?
-            window.view_data_backup.tables_view_databases = new models.Databases
+        if not app.view_data_backup.tables_view_databases?
+            app.view_data_backup.tables_view_databases = new models.Databases
             @loading = true
         else
             @loading = false
-        @databases = window.view_data_backup.tables_view_databases
+        @databases = app.view_data_backup.tables_view_databases
 
         @databases_list = new DatabasesListView
             collection: @databases

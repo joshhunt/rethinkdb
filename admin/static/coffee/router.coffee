@@ -6,6 +6,7 @@ log_view = require('./log_view.coffee')
 dataexplorer_view = require('./dataexplorer.coffee')
 table_view = require('./tables/table.coffee')
 server_view = require('./servers/server.coffee')
+app = require('./app.coffee')
 
 class BackboneCluster extends Backbone.Router
     # Routes can end with a slash too - This is useful is the user
@@ -30,9 +31,6 @@ class BackboneCluster extends Backbone.Router
     initialize: (data) ->
         super
         @navbar = data.navbar
-        # We bind the router to window.app to be able to have access to the root view
-        # ie. window.app.current_view
-        window.app = @
 
         @container = $('#cluster')
         @current_view = new Backbone.View

@@ -129,31 +129,6 @@ class Stats extends Backbone.Model
 # convenience, it's useful to pick data from several of these models: these
 # are computed models (and computed collections).
 
-stripslashes = (str) ->
-    str=str.replace(/\\'/g,'\'')
-    str=str.replace(/\\"/g,'"')
-    str=str.replace(/\\0/g,"\x00")
-    str=str.replace(/\\\\/g,'\\')
-    return str
-
-is_integer = (data) ->
-    return data.search(/^\d+$/) isnt -1
-
-# Deep copy. We do not copy prototype.
-deep_copy = (data) ->
-    if typeof data is 'boolean' or typeof data is 'number' or typeof data is 'string' or typeof data is 'number' or data is null or data is undefined
-        return data
-    else if typeof data is 'object' and Object.prototype.toString.call(data) is '[object Array]'
-        result = []
-        for value in data
-            result.push deep_copy value
-        return result
-    else if typeof data is 'object'
-        result = {}
-        for key, value of data
-            result[key] = deep_copy value
-        return result
-
 module.exports =
     Servers: Servers
     Server: Server
@@ -176,9 +151,3 @@ module.exports =
     Logs: Logs
     Log: Log
     Stats: Stats
-    # This module contains utility functions that compute and massage
-    # commonly used data.
-    DataUtils:
-        stripslashes: stripslashes
-        is_integer: is_integer
-        deep_copy: deep_copy

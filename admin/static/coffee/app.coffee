@@ -1,7 +1,7 @@
 # Copyright 2010-2012 RethinkDB, all rights reserved.
 
 r = require('rethinkdb')
-main_view_mod = require('./body.coffee')
+body = require('./body.coffee')
 data_explorer_view = require('./dataexplorer.coffee')
 system_db = 'rethinkdb'
 
@@ -25,7 +25,7 @@ class @Driver
         @state = 'ok'
         @timers = {}
         @index = 0
-
+t
     # Hack the driver: remove .run() and add private_run()
     # We want run() to throw an error, in case a user write .run() in a query.
     # We'll internally run a query with the method `private_run`
@@ -88,7 +88,7 @@ class @Driver
                         if @state is 'ok'
                             window.is_disconnected.display_fail()
                     else
-                        window.is_disconnected = new main_view_mod.IsDisconnected
+                        window.is_disconnected = new body.IsDisconnected
                     @state = 'fail'
                 else
                     if @state is 'fail'
@@ -367,12 +367,12 @@ class @Driver
         num_sindexes_constructing: (jobs=driver.admin().jobs) ->
             jobs.count((job) -> job('type').eq('index_construction'))
 
-main_view = new main_view_mod.MainContainer()
+main_container = new body.MainContainer()
 
 $ ->
-    $('body').html(main_view.render().$el)
+    $('body').html(main_container.render().$el)
     # We need to start the router after the main view is bound to the DOM
-    main_view.start_router()
+    main_container.start_router()
 
     Backbone.sync = (method, model, success, error) ->
         return 0
@@ -381,11 +381,12 @@ $ ->
 
 # Create a driver - providing sugar on top of the raw driver
 driver = new Driver
-module.exports.driver = driver
-# Some views backup their data here so that when you return to them
-# the latest data can be retrieved quickly.
-module.exports.view_data_backup = {}
-module.exports.main_view = main_view
 
-# The system database
-module.exports.system_db = system_db
+module.exports =
+    driver: driver
+    # Some views backup their data here so that when you return to them
+    # the latest data can be retrieved quickly.
+    view_data_backup: {}
+    main_container: main_container
+    # The system database
+    system_db: system_db

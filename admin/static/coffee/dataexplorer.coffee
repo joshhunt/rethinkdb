@@ -1,5 +1,14 @@
 # Copyright 2010-2015 RethinkDB, all rights reserved.
 
+app = require('./app.coffee')
+router = app.main_container.router
+system_db = app.system_db
+driver = app.driver
+utils = require('./utils.coffee')
+
+r = require('rethinkdb')
+
+
 state =
     current_query: null
     query_result: null
@@ -541,10 +550,10 @@ class Container extends Backbone.View
         for state of @suggestions
             @suggestions[state].sort()
 
-        if DataExplorerView.Container.prototype.focus_on_codemirror is true
+        if Container.prototype.focus_on_codemirror is true
             # "@" refers to prototype -_-
             # In case we give focus to codemirror then load the docs, we show the suggestion
-            window.router.current_view.handle_keypress()
+            router.current_view.handle_keypress()
 
     # Save the query in the history
     # The size of the history is infinite per session. But we will just save @size_history queries in localStorage
@@ -699,7 +708,7 @@ class Container extends Backbone.View
             @$('.reason_dataexplorer_broken').html @reason_dataexplorer_broken_template
             @$('.reason_dataexplorer_broken').slideDown 'fast'
             @$('.button_query').prop 'disabled', true
-        else if not window.r? # In case the javascript driver is not found (if build from source for example)
+        else if not r? # In case the javascript driver is not found (if build from source for example)
             @$('.reason_dataexplorer_broken').html @reason_dataexplorer_broken_template
                 no_driver: true
             @$('.reason_dataexplorer_broken').slideDown 'fast'
@@ -1538,7 +1547,7 @@ class Container extends Backbone.View
     extract_data_from_query: (args) =>
         size_stack = args.size_stack
         query = args.query
-        context = if args.context? then DataUtils.deep_copy(args.context) else {}
+        context = if args.context? then model.DataUtils.deep_copy(args.context) else {}
         position = args.position
 
         stack = []
@@ -1606,7 +1615,7 @@ class Container extends Backbone.View
                             element.type = 'anonymous_function'
                             list_args = result_regex[2]?.split(',')
                             element.args = []
-                            new_context = DataUtils.deep_copy context
+                            new_context = utils.deep_copy context
                             for arg in list_args
                                 arg = arg.replace(/(^\s*)|(\s*$)/gi,"") # Removing leading/trailing spaces
                                 new_context[arg] = true
@@ -3193,7 +3202,7 @@ class TableView extends ResultView
                     is_primitive: true
             else
                 if keys_count['object'][key]['object']?
-                    new_prefix = DataUtils.deep_copy(prefix)
+                    new_prefix = utils.deep_copy(prefix)
                     new_prefix.push key
                     @get_all_attr
                         keys_count: keys_count.object[key]
@@ -4173,15 +4182,15 @@ Utils =
                     classname: 'jt_bool'
                     value: if value then 'true' else 'false'
 
-
-module.exports.QueryResult = QueryResult
-module.exports.Container = Container
-module.exports.ResultView = ResultView
-module.exports.TreeView = TreeView
-module.exports.TableView = TableView
-module.exports.RawView = RawView
-module.exports.ProfileView = ProfileView
-module.exports.ResultViewWrapper = ResultViewWrapper
-module.exports.OptionsView = OptionsView
-module.exports.HistoryView = HistoryView
-module.exports.DriverHandler = DriverHandler
+module.exports =
+    QueryResult: QueryResult
+    Container: Container
+    ResultView: ResultView
+    TreeView: TreeView
+    TableView: TableView
+    RawView: RawView
+    ProfileView: ProfileView
+    ResultViewWrapper: ResultViewWrapper
+    OptionsView: OptionsView
+    HistoryView: HistoryView
+    DriverHandler: DriverHandler
