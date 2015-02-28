@@ -7,7 +7,7 @@ router = app.main_container.router
 class NavBarView extends Backbone.View
     id: 'navbar'
     className: 'container'
-    template: Handlebars.templates['navbar_view-template']
+    template: require('../handlebars/navbar_view.hbs')
     events:
         'click .options_link': 'update_cog_icon'
 

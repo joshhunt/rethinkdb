@@ -15,7 +15,7 @@ r = require('rethinkdb')
 class DashboardContainer extends Backbone.View
     id: 'dashboard_container'
     template:
-        error: Handlebars.templates['error-query-template']
+        error: require('../handlebars/error-query.hbs')
 
     initialize: =>
         if not app.view_data_backup.dashboard_view_dashboard?
@@ -101,7 +101,7 @@ class DashboardContainer extends Backbone.View
         super()
 
 class DashboardMainView extends Backbone.View
-    template: Handlebars.templates['dashboard_view-template']
+    template: require('../handlebars/dashboard_view.hbs')
     id: 'dashboard_main_view'
 
     events:
@@ -169,7 +169,7 @@ class DashboardMainView extends Backbone.View
 class ClusterStatusAvailability extends Backbone.View
     className: 'cluster-status-availability '
 
-    template: Handlebars.templates['dashboard_availability-template']
+    template: require('../handlebars/dashboard_availability.hbs')
 
     events:
         'click .show_details': 'show_popup'
@@ -234,7 +234,7 @@ class ClusterStatusAvailability extends Backbone.View
 class ClusterStatusRedundancy extends Backbone.View
     className: 'cluster-status-redundancy'
 
-    template: Handlebars.templates['dashboard_redundancy-template']
+    template: require('../handlebars/dashboard_redundancy.hbs')
 
     events:
         'click .show_details': 'show_popup'
@@ -299,7 +299,7 @@ class ClusterStatusRedundancy extends Backbone.View
 class ClusterStatusConnectivity extends Backbone.View
     className: 'cluster-status-connectivity '
 
-    template: Handlebars.templates['dashboard_connectivity-template']
+    template: require('../handlebars/dashboard_connectivity.hbs')
 
     events:
         'click .show_details': 'show_popup'
@@ -362,7 +362,7 @@ class ClusterStatusConnectivity extends Backbone.View
 class ClusterStatusSindexes extends Backbone.View
     className: 'cluster-status-sindexes'
 
-    template: Handlebars.templates['dashboard_sindexes']
+    template: require('../handlebars/dashboard_sindexes.hbs')
 
     initialize: =>
         @listenTo @model, 'change:num_sindex_issues', @render

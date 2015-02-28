@@ -13,9 +13,9 @@ system_db = app.system_db
 r = require('rethinkdb')
 
 class AddDatabaseModal extends ui_modals.AbstractModal
-    template: Handlebars.templates['add_database-modal-template']
+    template: require('../handlebars/add_database-modal.hbs')
     templates:
-        error: Handlebars.templates['error_input-template']
+        error: require('../handlebars/error_input.hbs')
 
     class: 'add-database'
 
@@ -79,7 +79,7 @@ class AddDatabaseModal extends ui_modals.AbstractModal
         router.current_view.render_message "The database #{@formdata.name} was successfully created."
 
 class DeleteDatabaseModal extends ui_modals.AbstractModal
-    template: Handlebars.templates['delete-database-modal']
+    template: require('../handlebars/delete-database-modal.hbs')
     class: 'delete_database-dialog'
 
     render: (database_to_delete) ->
@@ -126,9 +126,9 @@ class DeleteDatabaseModal extends ui_modals.AbstractModal
         router.current_view.render_message "The database #{@database_to_delete.get('name')} was successfully deleted."
 
 class AddTableModal extends ui_modals.AbstractModal
-    template: Handlebars.templates['add_table-modal-template']
+    template: require('../handlebars/add_table-modal.hbs')
     templates:
-        error: Handlebars.templates['error_input-template']
+        error: require('../handlebars/error_input.hbs')
     class: 'add-table'
 
     initialize: (data) =>
@@ -239,7 +239,7 @@ class AddTableModal extends ui_modals.AbstractModal
         super()
 
 class RemoveTableModal extends ui_modals.AbstractModal
-    template: Handlebars.templates['remove_table-modal-template']
+    template: require('../handlebars/remove_table-modal.hbs')
     class: 'remove-namespace-dialog'
 
     render: (tables_to_delete) =>
@@ -309,9 +309,9 @@ class RemoveTableModal extends ui_modals.AbstractModal
         @remove()
 
 class RemoveServerModal extends ui_modals.AbstractModal
-    template: Handlebars.templates['declare_server_dead-modal-template']
-    alert_tmpl: Handlebars.templates['resolve_issues-resolved-template']
-    template_issue_error: Handlebars.templates['fail_solve_issue-template']
+    template: require('../handlebars/declare_server_dead-modal.hbs')
+    alert_tmpl: require('../handlebars/resolve_issues-resolved.hbs')
+    template_issue_error: require('../handlebars/fail_solve_issue.hbs')
 
     class: 'declare-server-dead'
 
@@ -368,7 +368,7 @@ class RemoveServerModal extends ui_modals.AbstractModal
 
 # Modals.ReconfigureModal
 class ReconfigureModal extends ui_modals.AbstractModal
-    template: Handlebars.templates['reconfigure-modal']
+    template: require('../handlebars/reconfigure-modal.hbs')
 
     class: 'reconfigure-modal'
 
