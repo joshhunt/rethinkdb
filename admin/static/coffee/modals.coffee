@@ -5,8 +5,6 @@ util = require('./util.coffee')
 models = require('./models.coffee')
 table_view = require('./tables/table.coffee')
 app = require('./app.coffee')
-main_container = app.main_container
-router = main_container.router
 driver = app.driver
 system_db = app.system_db
 
@@ -76,7 +74,7 @@ class AddDatabaseModal extends ui_modals.AbstractModal
 
     on_success: (response) =>
         super()
-        router.current_view.render_message "The database #{@formdata.name} was successfully created."
+        app.main.router.current_view.render_message "The database #{@formdata.name} was successfully created."
 
 class DeleteDatabaseModal extends ui_modals.AbstractModal
     template: require('../handlebars/delete-database-modal.hbs')
@@ -121,9 +119,9 @@ class DeleteDatabaseModal extends ui_modals.AbstractModal
         else
             # If the user was on a database view, we have to redirect him
             # If he was on #tables, we are just refreshing
-            router.navigate '#tables', {trigger: true}
+            app.main.router.navigate '#tables', {trigger: true}
 
-        router.current_view.render_message "The database #{@database_to_delete.get('name')} was successfully deleted."
+        app.main.router.current_view.render_message "The database #{@database_to_delete.get('name')} was successfully deleted."
 
 class AddTableModal extends ui_modals.AbstractModal
     template: require('../handlebars/add_table-modal.hbs')
@@ -232,7 +230,7 @@ class AddTableModal extends ui_modals.AbstractModal
 
     on_success: (response) =>
         super
-        router.current_view.render_message "The table #{@db_name}.#{@formdata.name} was successfully created."
+        app.main.router.current_view.render_message "The table #{@db_name}.#{@formdata.name} was successfully created."
 
     remove: =>
         @stopListening()
@@ -304,8 +302,8 @@ class RemoveTableModal extends ui_modals.AbstractModal
         message += " successfully deleted."
 
         if Backbone.history.fragment isnt 'tables'
-            router.navigate '#tables', {trigger: true}
-        router.current_view.render_message message
+            app.main.router.navigate '#tables', {trigger: true}
+        app.main.router.current_view.render_message message
         @remove()
 
 class RemoveServerModal extends ui_modals.AbstractModal

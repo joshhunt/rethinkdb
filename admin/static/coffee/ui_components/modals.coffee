@@ -125,7 +125,7 @@ class AbstractModal extends Backbone.View
         super()
 
 # This is for doing user confirmation easily
-class ConfirmationDialogModal extends @AbstractModal
+class ConfirmationDialogModal extends AbstractModal
     template: require('../../handlebars/confirmation_dialog.hbs')
     class: 'confirmation-modal'
 
@@ -163,7 +163,7 @@ class ConfirmationDialogModal extends @AbstractModal
 #   - on_success: function to perform on successful rename
 #   - options:
 #     * hide_alert: hide the alert shown in the user space on success
-class RenameItemModal extends @AbstractModal
+class RenameItemModal extends AbstractModal
     template: require('../../handlebars/rename_item-modal.hbs')
     alert_tmpl: require('../../handlebars/renamed_item-alert.hbs')
     error_template: require('../../handlebars/error_input.hbs')

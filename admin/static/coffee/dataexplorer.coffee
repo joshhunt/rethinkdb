@@ -1,7 +1,6 @@
 # Copyright 2010-2015 RethinkDB, all rights reserved.
 
 app = require('./app.coffee')
-router = app.main_container.router
 system_db = app.system_db
 driver = app.driver
 util = require('./util.coffee')
@@ -553,7 +552,7 @@ class Container extends Backbone.View
         if Container.prototype.focus_on_codemirror is true
             # "@" refers to prototype -_-
             # In case we give focus to codemirror then load the docs, we show the suggestion
-            router.current_view.handle_keypress()
+            app.main.router.current_view.handle_keypress()
 
     # Save the query in the history
     # The size of the history is infinite per session. But we will just save @size_history queries in localStorage

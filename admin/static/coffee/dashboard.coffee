@@ -3,7 +3,6 @@
 app = require('./app.coffee')
 driver = app.driver
 system_db = app.system_db
-main_container = app.main_container
 models = require('./models.coffee')
 log_view = require('./log_view.coffee')
 vis = require('./vis.coffee')
@@ -18,8 +17,9 @@ class DashboardContainer extends Backbone.View
         error: require('../handlebars/error-query.hbs')
 
     initialize: =>
+        console.log app
         if not app.view_data_backup.dashboard_view_dashboard?
-            app.view_data_backup.dashboard_view_dashboard = new Dashboard
+            app.view_data_backup.dashboard_view_dashboard = new models.Dashboard
         @dashboard = app.view_data_backup.dashboard_view_dashboard
 
         @dashboard_view = new DashboardMainView
@@ -140,7 +140,7 @@ class DashboardMainView extends Backbone.View
 
 
     show_all_logs: ->
-        main_container.router.navigate '#logs',
+        app.main.router.navigate '#logs',
             trigger: true
 
     render: =>
